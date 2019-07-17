@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {ICustomer} from './customer';
 import {CustomerService} from './customer.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class CustomerDetailComponent{
     customer : ICustomer;
     errorMessage: string;
 
-    constructor(private _customerService:CustomerService, private _route: ActivatedRoute){
+    constructor(private _customerService:CustomerService, private _route: ActivatedRoute, private _router: Router,private _location: Location){
         console.log(2);
     }
 
@@ -28,6 +29,11 @@ export class CustomerDetailComponent{
     getCustomer(accountNumber:number){
         this._customerService.getCustomer(accountNumber).subscribe(result => this.customer = result,
             error => this.errorMessage=<any>error);
+    }
+
+    onBack(): void{
+        // this._router.navigate(['/customers']);
+        this._location.back();
     }
 
     
